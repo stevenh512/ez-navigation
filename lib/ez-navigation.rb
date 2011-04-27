@@ -1,0 +1,2 @@
+require 'ez/navigation'
+
