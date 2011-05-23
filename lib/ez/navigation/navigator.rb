@@ -73,11 +73,12 @@ module Ez
 
         links = menu.inject([]) do |items, (item, opts)|
           next(items) unless execute_proc(opts[:if])
+          remote = { :remote => opts.delete(:remote) }
 
           text, path, attrs = self.disect(item, opts)
           subnav = construct_html(menu[item][SUBMENU], true).to_s.html_safe
           attrs.merge!(:class => [attrs[:class], self.current_css(item, nested)].compact.join(' '))
-          items << self.view.content_tag(:li, self.view.link_to(text, path) + subnav, attrs).html_safe
+          items << self.view.content_tag(:li, self.view.link_to(text, path, remote ) + subnav, attrs).html_safe
         end
 
         nested ? self.view.content_tag(:ul, links.join.html_safe, :class => 'sub-navigation') : links.join.html_safe
