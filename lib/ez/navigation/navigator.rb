@@ -73,7 +73,7 @@ module Ez
 
         links = menu.inject([]) do |items, (item, opts)|
           next(items) unless execute_proc(opts[:if])
-          remote = { :remote => opts.delete(:remote) }
+          remote = opts.delete(:remote) ? { :remote => true } : {}
 
           text, path, attrs = self.disect(item, opts)
           subnav = construct_html(menu[item][SUBMENU], true).to_s.html_safe
